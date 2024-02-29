@@ -1,3 +1,6 @@
+Authoer : Deepesh Singh Suryavanshi 
+project: Prectis project PS Softech
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
