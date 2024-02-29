@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { Grid, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { editEmployee ,RemoveEmployee} from "../Store/slices/EmployeeSlice";
 
 export default function DisplayAllEmployee() {
   var dispatch=useDispatch()
@@ -25,7 +26,6 @@ export default function DisplayAllEmployee() {
       return state.employee
     })
     var list=Object.values(data)
-    console.log("data in Display featch",list);
     const [refresh,setRefresh]=useState(false)
     const [Employeeid,setEmployeeid]=useState('');
     const [Employeename,setEmployeename]=useState('');
@@ -35,12 +35,15 @@ export default function DisplayAllEmployee() {
     const [open,setopen]=useState(false)
 
     const handleEditTask=(data)=>{
-    setEmployeeid(data.taskid)
-    setEmployeename(data.taskname)
-    setEmployeepost(data.AssignDate)
-    setEmployeesalary(data.finishDate)
+    setEmployeeid(data.Employeeid)
+    setEmployeename(data.Employeename)
+    setEmployeepost(data.Employeepost)
+    setEmployeesalary(data.Employeesalary)
     setPicture(data.Picture)
     setopen(true)
+    }
+    const handlePicture=(event)=>{
+      setPicture(URL.createObjectURL(event.target.files[0]))
     }
 
     const handleUpdate=()=>{
@@ -51,24 +54,24 @@ export default function DisplayAllEmployee() {
         Employeesalary,
         Picture,
       }
-      dispatch({ type: "EDIT-TASK", payload: [Employeeid, body] });
+      dispatch(editEmployee([Employeeid,body]));
+      setopen(false)
     }
     const handleDelete=(data)=>{
-    var id=data.taskid
+    var id=data.Employeeid
     Swal.fire({
-      title: "Do you want to Delete?",
+      title: "Do you want to Remove?",
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: "Delete",
-      denyButtonText: `Don't Delete`
+      confirmButtonText: "Remove ",
+      denyButtonText: `Don't Remove`
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        dispatch({type:"DELETE-TASK",payload:[id]})
-        Swal.fire("Deleted!", "Task", "success");
+        dispatch(RemoveEmployee([id]))
+        Swal.fire("Remove!", "Employee", "success");
         setRefresh(true)
       } else if (result.isDenied) {
-        Swal.fire("Cancle Delete", "", "info");
+        Swal.fire("Cancle Remove", "", "info");
       }
     });
    }
@@ -88,11 +91,11 @@ const handleClose = () => {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Product Edit Dialog"}
+            {"Employee Edit."}
           </DialogTitle>
           <DialogContent>
           <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={12} style={{marginTop:5}}>
                 <TextField
                   fullWidth
                   label="Employee Name"
@@ -116,7 +119,7 @@ const handleClose = () => {
                   value={Employeesalary}
                 />
               </Grid>
-              {/* <Grid item xs={6}>
+              <Grid item xs={6}>
                 <Button component="label" >
                   <input onChange={handlePicture} multiple  type="file" hidden accept="image/*"  />
                  Upload Picture
@@ -124,7 +127,7 @@ const handleClose = () => {
               </Grid>
               <Grid item xs={6}>
                 <img src={`${Picture}`} style={{width:100,height:'auto',background:'white',borderRadius:10}} />
-              </Grid> */}
+              </Grid>
               <Grid item xs={12}>
                 <Button variant="contained" fullWidth onClick={handleUpdate}>
                   Update Employee

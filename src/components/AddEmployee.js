@@ -19,7 +19,6 @@ const handlePicture=(event)=>{
   }
 
   const handleadd = () => {
-    alert("Add Employee work")
     var unique_id = uuid4();
     var Employeeid = unique_id.slice(0, 5);
     var body = {
@@ -29,8 +28,7 @@ const handlePicture=(event)=>{
       Employeesalary,
       Picture
     };
-    console.log("data to dispatch >>", body);
-    dispatch(addEmployee(Employeeid,body));
+    dispatch(addEmployee([Employeeid,body]));
     setEmployeename("");
     setEmployeepost("");
     setEmployeesalary("");
