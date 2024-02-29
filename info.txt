@@ -1,0 +1,15 @@
+Rect-Redux:
+----------
+its a webcontainer where user dispatch data & share globaly in web application.
+store data in a function and share to any comonent globally in react or etc framworks.
+
+-means data which in contaoner used by each component of web-app.
+-even one can change data in any component & changes will reflect in otner components.
+-modules:
+ redux (createStore)
+ react-redux (Provider,useDispatch,useSelector)
+
+@ Redux Toolkit--
+  Reduxjs/Toolkit (configerStore,createSlice)
+  configerStore-createStore in toolkit
+  createSlice-Slice are provider us to create function in store
